@@ -97,35 +97,18 @@ print(squareNumbers(arr))
 # 6. Given a fixed-length integer array arr, duplicate each occurrence of zero,
 # shifting the remaining elements to the right.
 
-# def duplicateZero(arr):
-#     n = len(arr)
-#     j = 0
-#     for i in range(n):
-#         if arr[i] == 0:
-#             j = i
-#             for n in range(n, j+1, -1):
-#                 arr[n-1] = arr[n-2]
-#         elif arr[n - 1] == 0:
-#             pass
-#         else:
-#             arr[i] = arr[i]
-
 def duplicateZero(arr):
     n = len(arr)
     i = 0
-    while arr[i] == 0:
-        if arr[n - 1] == 0:
-            pass
+    while i < n:
+        if arr[i] == 0:
+            for n in range(n, i+1, -1):
+                arr[n-1] = arr[n-2]
+            i += 2
+            n = len(arr)
+            continue
         else:
-            arr[n - 1] = arr[n - 2]
             i += 1
-    return arr
-
-
-arr = [1, 0, 2, 3, 0, 4, 5, 0]
-print(duplicateZero(arr))
-print(arr)
-
 
 # 7. You are given two integer arrays nums1 and nums2, sorted in non-decreasing order,
 # and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
@@ -530,3 +513,166 @@ print(isRotation(s1, s2))
 # data = str(r.get('https://api.publicapis.org/entries').text)
 # with open('file_test.txt', 'w') as file:
 #     file.write(data)
+
+# 19. Given an integer array nums sorted in non-decreasing order,
+# remove the duplicates in-place such that each unique element appears only once.
+# The relative order of the elements should be kept the same.
+# Do not allocate extra space for another array.
+# You must do this by modifying the input array in-place with O(1) extra memory.
+
+def removeDuplicateNumbers(arr):
+    n = len(arr)
+    i = 0
+    while i < n:
+        for j in range(1, n-1, +1):
+            if arr[i] == arr[j]:
+                arr.pop(arr[j])
+                n -= 1
+                break
+        i += 1
+    return arr, n
+
+# arr = [1, 1, 2]
+arr = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
+print(removeDuplicateNumbers(arr))
+
+# 20. Given an array arr of integers, check if there exists two integers N and M
+# such that N is the double of M ( i.e. N = 2 * M).
+
+def numAndItsDoubleCheck(arr):
+    n = len(arr)
+    for i in range(0, n, +1):
+        for j in range(0, n, +1):
+            if arr[i] == 2 * arr[j]:
+                return True
+            else:
+                return False
+
+arr = [3,1,7,11]
+print(numAndItsDoubleCheck(arr))
+
+# 21. Given an array of integers arr, return true if and only if it is a valid mountain array
+# Recall that arr is a mountain array if and only if:
+#   arr.length >= 3
+#   There exists some i with 0 < i < arr.length - 1 such that:
+#   arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+#   arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+
+def isMountainArray(arr):
+    n = len(arr)
+    m = 0
+    p = 0
+    mountain_right = False
+    mountain_left = False
+    if n >= 3:
+        if n % 2 == 0:
+            m = int(n/2) - 1
+            p = int(n/2)
+        else:
+            m = p = int(n / 2)
+
+        for i in range(0, m, +1):
+            if arr[i] < arr[i+1]:
+                mountain_right = True
+        for j in range(n, p, -1):
+            if arr[n-1] < arr[n-2]:
+                mountain_left = True
+    else:
+        mountain_array = False
+    if mountain_right and mountain_left:
+        return True
+    else:
+        return False
+
+arr = [0,2,3,4,5,2,1,0]
+print(isMountainArray(arr))
+
+# 22. Given an Array of integers, return an Array where every element at an even-indexed position is squared.
+#Solution 1
+def evenIndexSquaring(arr):
+    n = len(arr)
+    for i in range(0, n, +2):
+        arr[i] = arr[i] * arr[i]
+    return arr
+
+# Solution 2
+# def evenIndexSquaring(arr):
+#     n = len(arr)
+#     for i in range(0, n):
+#         if i % 2 == 0:
+#             arr[i] = arr[i] * arr[i]
+#     return arr
+
+# Solution 3
+# def evenIndexSquaring(arr):
+#     n = len(arr)
+#     i = 0
+#     while i < n:
+#         if i % 2 == 0:
+#             arr[i] = arr[i] * arr[i]
+#         i += 1
+#     return arr
+
+arr = [9, -2, -9, 11, 56, -12, -3]
+print(evenIndexSquaring(arr))
+
+# 23. Given an array arr, replace every element in that array with the greatest element
+# among the elements to its right, and replace the last element with -1.
+
+def replaceWithGreatestRight(arr):
+    n = len(arr)
+    i = 0
+    while i < n:
+        for n in range(n, i+1, -1):
+            if arr[n-1] > arr[n-2]:
+                arr[i] = arr[n-1]
+        i += 1
+        n = len(arr)
+        if i == n-2:
+            arr[n - 2] = arr[n - 1]
+        elif i == n-1 or i == n:
+            arr[n-1] = -1
+    return arr
+
+# arr = [17,18,5,4,6,1]
+arr = [400]
+print(replaceWithGreatestRight(arr))
+
+# 24. Given an integer array nums, move all 0's to the end of it
+# while maintaining the relative order of the non-zero elements.
+# Note that you must do this in-place without making a copy of the array.
+
+def moveZerosToEndOfArray(arr):
+    n = len(arr)
+    if n == 1:
+        pass
+    else:
+        for i in range(n):
+            if arr[i] == 0:
+                arr.pop(arr[i])
+                arr.append(arr[i])
+    return arr
+
+arr = [0,1,0,3,12]
+print(moveZerosToEndOfArray(arr))
+
+def moveZerosToEndOfArray(arr):
+    n = len(arr)
+    count = 0
+    i = 0
+    if n == 1:
+        pass
+    else:
+        while i < n:
+            if arr[i] == 0:
+                arr.remove(arr[i])
+                count += 1
+                n = len(arr)
+            i += 1
+        for i in range(count):
+            arr.append(0)
+    return arr
+
+arr = [0]
+# arr = [0,1,0,3,12]
+print(moveZerosToEndOfArray(arr))
