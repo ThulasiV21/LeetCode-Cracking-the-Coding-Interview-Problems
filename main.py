@@ -644,20 +644,6 @@ print(replaceWithGreatestRight(arr))
 
 def moveZerosToEndOfArray(arr):
     n = len(arr)
-    if n == 1:
-        pass
-    else:
-        for i in range(n):
-            if arr[i] == 0:
-                arr.pop(arr[i])
-                arr.append(arr[i])
-    return arr
-
-arr = [0,1,0,3,12]
-print(moveZerosToEndOfArray(arr))
-
-def moveZerosToEndOfArray(arr):
-    n = len(arr)
     count = 0
     i = 0
     if n == 1:
@@ -676,3 +662,136 @@ def moveZerosToEndOfArray(arr):
 arr = [0]
 # arr = [0,1,0,3,12]
 print(moveZerosToEndOfArray(arr))
+
+# 25. Given an integer array nums, move all the even integers at the beginning of the array followed by all the odd integers.
+
+# Solution 1 using sort
+def sortArrayByParity(arr):
+    arr.sort(key = lambda x: x % 2)
+    return arr
+
+# Solution 2
+def sortArrayByParity(arr):
+    return ([x for x in arr if x % 2 == 0] +
+            [x for x in arr if x % 2 == 1])
+
+# Solution 3
+def sortArrayByParity(arr):
+    i, j = 0, len(arr) - 1
+    while i < j:
+        if arr[i] % 2 > arr[j] % 2:
+            arr[i], arr[j] = arr[j], arr[i]
+
+        if arr[i] % 2 == 0: i += 1
+        if arr[j] % 2 == 1: j -= 1
+
+    return arr
+
+# 26. A school is trying to take an annual photo of all the students.
+# The students are asked to stand in a single file line in non-decreasing order by height.
+# Let this ordering be represented by the integer array expected where expected[i] is the expected height of the ith student in line.
+
+# You are given an integer array heights representing the current order that the students are standing in.
+# Each heights[i] is the height of the ith student in line (0-indexed).
+
+# Return the number of indices where heights[i] != expected[i]. (# [''.join(value) for value in index_list], sep=','))
+
+def checkHeightExpected(arr1, arr2):
+    n = len(arr1)
+    m = len(arr2)
+    index_list = []
+
+    if not n >= 1 or not m >= 1:
+        return False
+    if not n == m:
+        return False
+    for i in range(n):
+        if arr1[i] != arr2[i]:
+            index_list.append(str(i))
+    # import pdb;pdb.set_trace()
+    if len(index_list) == 0:
+        print("All indices match")
+        print(f"Number of indice(s) that do not match are: {len(index_list)}")
+    elif len(index_list) == n:
+        print("All indices do not match")
+        print(f"Number of indice(s) that do not match are: {len(index_list)}")
+    elif len(index_list) > 0:
+        print("Indices {} do not match".format(', '.join(index_list)))
+        print(f"Number of indice(s) that do not match are: {len(index_list)}")
+    # return len(index_list)
+
+arr1 = [1,2,3,4,5]
+arr2 = [1,2,3,4,5]
+
+# arr1 = [5,1,2,3,4]
+# arr2 = [1,2,3,4,5]
+
+arr1 = [1,1,4,2,1,3]
+arr2 = [1,1,1,2,3,4]
+print(checkHeightExpected(arr1, arr2))
+
+# 27. Given a binary array nums, return the maximum number of consecutive 1's in the array if you can flip at most one 0.
+# Flip the first zero will get the maximum number of consecutive 1s.
+
+def countConsecutives(arr):
+    n = len(arr)
+    count = 0
+    result = 0
+
+    for i in range(n):
+        if arr[i] == 0:
+            arr[i] = 1
+            break
+
+    for i in range(n):
+        if arr[i] == 1:
+            count += 1
+        elif arr[i] == 0:
+            result = count
+            count = 0
+
+    return max(result, count)
+
+arr = [1,0,1,1,1,1,0,1,1,1,1,1]
+# arr = [1,0,1,1,0,1,1,1,1,1]
+# arr = [1,0,1,1,0,1]
+# arr = [1,0,1,1,0]
+print(countConsecutives(arr))
+
+# 28. Given an integer array nums, return the third distinct maximum number in this array.
+# If the third maximum does not exist, return the maximum number.
+
+def thirdDisticntMaxNumber(arr):
+    n = len(arr)
+    count = 0
+    i = 0
+    index_value = 0
+
+    if len(arr) == 0:
+        print("No numbers in array, nothing to compare")
+        pass
+    elif len(arr) == 1:
+        return ''.join(arr)
+        pass
+    elif len(arr) > 1 and len(arr) < 3:
+        print(f"The Distinct maximum number between the two numbers in the array is {max(arr)}")
+        pass
+    else:
+        while i < n:
+            if count == 3:
+                index_value = i
+            elif i == n-1:
+                if arr[n-1] != arr[n-2]:
+                    index_value = i
+                    break
+            if arr[i] != arr[i+1]:
+                count += 1
+            i += 1
+        print(f"The third distinct maximum number is {arr[index_value]}")
+
+arr = [2,2,3,3,3,3,1]
+# arr = [2,2,3,1]
+# arr = [1,2]
+# arr = [3,2,1]
+thirdDisticntMaxNumber(arr)
+
