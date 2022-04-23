@@ -763,9 +763,9 @@ print(countConsecutives(arr))
 
 def thirdDisticntMaxNumber(arr):
     n = len(arr)
-    count = 0
+    count = 1
     i = 0
-    index_value = 0
+    compare = None
 
     if len(arr) == 0:
         print("No numbers in array, nothing to compare")
@@ -777,21 +777,39 @@ def thirdDisticntMaxNumber(arr):
         print(f"The Distinct maximum number between the two numbers in the array is {max(arr)}")
         pass
     else:
+        compare = arr[0]
         while i < n:
-            if count == 3:
-                index_value = i
-            elif i == n-1:
-                if arr[n-1] != arr[n-2]:
-                    index_value = i
-                    break
-            if arr[i] != arr[i+1]:
+            if arr[i] != compare:
                 count += 1
+                compare = arr[i]
+            if count == 3:
+                print(f"The third distinct maximum number is {arr[i]}")
             i += 1
-        print(f"The third distinct maximum number is {arr[index_value]}")
 
-arr = [2,2,3,3,3,3,1]
+arr = [2,2,3,3,3,3,1,4]
+# arr = [2,3,1,4]
 # arr = [2,2,3,1]
 # arr = [1,2]
 # arr = [3,2,1]
 thirdDisticntMaxNumber(arr)
+
+# 29. Given an array nums of n integers where nums[i] is in the range [1, n],
+# return an array of all the integers in the range [1, n] that do not appear in nums
+
+# Solution 1
+def notInListNumbers(arr):
+    n = len(arr)
+    num_lst = []
+    i = 1
+
+    while i <= n:
+        num_lst.append(i)
+        i += 1
+
+    for i in range(n):
+        if arr[i] in num_lst:
+            num_lst.remove(arr[i])
+    return num_lst
+
+
 

@@ -138,4 +138,18 @@
 #
 # app.run()
 
+def notInListNumbers(arr):
+    n = len(arr)
+    # i = 1
+    arr.sort()
 
+    for i in range(1, n, +1):
+        if i in arr:
+            arr.remove(i)
+        else:
+            arr.append(i)
+    return arr
+
+arr = [4,3,2,7,8,2,3,1]
+# arr = [1,1]
+print(notInListNumbers(arr))
