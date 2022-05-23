@@ -811,5 +811,60 @@ def notInListNumbers(arr):
             num_lst.remove(arr[i])
     return num_lst
 
+# Solution 2
+def notInListNumbers(arr):
+    n = len(arr)
+    i = 1
+    count = 0
+    m = 0
 
+    for i in range(1, n+1, +1):
+        if i not in arr:
+            arr.append(i)
+            count += 1
 
+    n = len(arr)
+    m = n - count - 1
+
+    while m >= 0:
+        arr.remove(arr[m])
+        m -= 1
+
+    return arr
+
+# arr = [4,3,2,7,8,2,3,1]
+arr = [1,1]
+print(notInListNumbers(arr))
+
+# 30. Given an integer array nums sorted in non-decreasing order,
+# return an array of the squares of each number sorted in non-decreasing order.
+
+def squaresInNonDeceasingorder(arr):
+    n = len(arr)
+    swaped = False
+
+    for i in range(n):
+        arr[i] = arr[i] * arr[i]
+
+    i = 0
+
+    while i < n:
+        if swaped:
+            i = 0
+            swaped = False
+        if i == n-2 or i == n-1:
+            if arr[n-2] > arr[n-1]:
+                arr[n - 2], arr[n-1] = arr[n-1], arr[n - 2]
+                break
+            else:
+                break
+        if arr[i] > arr[i + 1]:
+            arr[i], arr[i + 1] = arr[i + 1], arr[i]
+            swaped = True
+        i += 1
+
+    return arr
+
+# arr = [-4,-1,0,3,10]
+arr = [-7,-3,2,3,11]
+print(squaresInNonDeceasingorder(arr))
