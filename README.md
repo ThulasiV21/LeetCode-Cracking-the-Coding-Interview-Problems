@@ -1,2 +1,2 @@
 ## My solutions to LeetCode and Cracking the Coding Interview Problems
-## Array 101
+## Introduction to Data Structure - Arrays 101
